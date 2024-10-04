@@ -291,47 +291,44 @@
 <h1 id="implementacion-de-ejemplo">Implementación de ejemplo</h1>
 <h2 id="importacion-de-modulos-necesarios">Importación de módulos necesarios</h2>
 <p>Para ejecutar estas funciones, es necesario contar con <code>np.array</code> de <code>numpy</code>, junto con una librería para graficar como <code>matplotlib</code>.</p>
-<p>```
-import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
-´´´</p>
+</code></pre>
 <h1 id="funciones-del-modulo">Funciones del módulo</h1>
-<p>´´´</p>
-<h1 id="funcion-que-genera-la-evolucion-temporal-ver-referencia">Función que genera la evolución temporal (ver Referencia)</h1>
-<p>def dyn_generator(oper, state):
-    return -1j * (np.dot(oper, state) - np.dot(state, oper))</p>
-<h1 id="funcion-que-aplica-el-metodo-rk4-ver-referencia">Función que aplica el método RK4 (ver Referencia)</h1>
-<p>def rk4(func, oper, state, h):
+<pre><code># Función que genera la evolución temporal (ver Referencia)
+def dyn_generator(oper, state):
+    return -1j * (np.dot(oper, state) - np.dot(state, oper))
+
+# Función que aplica el método RK4 (ver Referencia)
+def rk4(func, oper, state, h):
     k1 = h * func(oper, state)
     k2 = h * func(oper, state + k1 / 2)
     k3 = h * func(oper, state + k2 / 2)
-    k4 = h * func(oper, state + k3)</p>
-<pre><code>return state + (k1 + 2*k2 + 2*k3 + k4) * (1 / 6)
+    k4 = h * func(oper, state + k3)
+
+    return state + (k1 + 2*k2 + 2*k3 + k4) * (1 / 6)
 </code></pre>
-<p>´´´</p>
 <h1 id="insumos">Insumos</h1>
-<p>´´´
-oOper = np.array([[0, 1], [1, 0]]) # Ejemplo de operador
+<pre><code>oOper = np.array([[0, 1], [1, 0]]) # Ejemplo de operador
 yInit = np.array([[1, 0], [0, 0]]) # Estado inicial
 times = np.linspace(0, 10, 50)
-h = times[1] - times[0]</p>
-<h1 id="arreglos-para-guardar-estados">Arreglos para guardar estados</h1>
-<p>stateQuant00 = np.zeros(times.size)
+h = times[1] - times[0]
+
+# Arreglos para guardar estados
+stateQuant00 = np.zeros(times.size)
 stateQuant11 = np.zeros(times.size)
-´´´</p>
-<h1 id="calculo">Cálculo</h1>
-<p>´´´
-for tt in range(times.size):
-    stateQuant00[tt] = yInit[0, 0].real
-    stateQuant11[tt] = yInit[1, 1].real</p>
-<pre><code>yInit = rk4(dyn_generator, oOper, yInit, h)
 </code></pre>
-<p>´´´</p>
+<h1 id="calculo">Cálculo</h1>
+<pre><code>for tt in range(times.size):
+    stateQuant00[tt] = yInit[0, 0].real
+    stateQuant11[tt] = yInit[1, 1].real
+
+    yInit = rk4(dyn_generator, oOper, yInit, h)
+</code></pre>
 <h1 id="visualizar">Visualizar</h1>
-<p>´´´
-plt.plot(times, stateQuant00)
+<pre><code>plt.plot(times, stateQuant00)
 plt.plot(times, stateQuant11)
-´´´</p>
+</code></pre>
 
               
             </article>
